@@ -1,31 +1,120 @@
+#ifndef BALDE_H
+#define BALDE_H
+
+#include "brightness.h"
+#include "button.h"
+#include "pinsconfig.h"
 #include <FastLED.h>
 #include <vector>
 
 FASTLED_USING_NAMESPACE
-  
+
 class Blade
 {
 public:
-  Blade(
-    float brightness
-  ) :
-    enabled(false),
+  Blade() :
+    activated(false),
+    colorChangeButton(CHANGE_COLOR_PIN),
     currentColorIdx(0),
     currentColor(Blade::Colors[currentColorIdx]),
-    currentBrightness(brightness),
+    brightnessInput(
+      BRIGHTNESS_PIN,
+      6,
+      1024
+    ),
+    currentBrightness(0),
     enabldeAndDisableDelay(3)
   {    
     setCurrentColor();
   }
+
+  void init()
+  {
+    FastLED.addLeds<WS2811, LED_STRIP_DATA_PIN, GRB>(ledsTable(), numberOfLeds()).setCorrection(TypicalLEDStrip);
+    FastLED.setBrightness(0);
+  }
+
+  void activate()
+  {
+    if(not activated)
+    {
+      setBrightness();
+      activated = true;
+      enableLedsWithDelay();
+    }
+  }
+  void deactivate()
+  {
+    if(activated)
+    {
+      activated = false;
+      disableLedsWithDelay();
+    }
+  }
+
+  void checkChanges()
+  {
+    setBrightness();
+    if(colorChangeButton.clicked())
+    {
+      changeColor();
+    }
+    FastLED.show();
+  }
+  
+private:
+  static const int numOfLeds = 120;
+  CRGB leds[numOfLeds];
+  bool activated;
+  Button colorChangeButton;
+  size_t currentColorIdx;
+  CRGB currentColor;
+  Brightness brightnessInput;
+  float currentBrightness;
+  int enabldeAndDisableDelay;
+  static std::vector<CRGB> Colors;
 
   int numberOfLeds() const
   {
     return numOfLeds;
   }
 
-  CRGB* leds()
+  CRGB* ledsTable()
   {
-    return ledsTable;
+    return leds;
+  }
+  void enableLedsWithDelay()
+  {
+    int middleOfLeds = numOfLeds / 2;
+    for( int i = 0, j = numOfLeds - 1; i < middleOfLeds; i++, j--)
+    {
+      leds[i] = currentColor;
+      leds[j] = currentColor;
+      delay(enabldeAndDisableDelay);
+      FastLED.show();
+    }
+  }
+
+  void disableLedsWithDelay()
+  {
+    int middleOfLeds = numOfLeds / 2;
+    for( int i = middleOfLeds - 1, j = middleOfLeds; 0 <= i; i--, j++)
+    {
+      leds[i] = CRGB::Black;
+      leds[j] = CRGB::Black;
+      delay(enabldeAndDisableDelay);
+      FastLED.show();
+    }
+  }
+
+  void setBrightness()
+  {
+    float newValue = brightnessInput.level();
+    if(currentBrightness != newValue)
+    {
+      currentBrightness = newValue;
+      FastLED.setBrightness(255 * newValue);
+    }
   }
 
   void changeColor()
@@ -33,42 +122,6 @@ public:
     nextColor();
     setCurrentColor();
   }
-
-  void setBrightness(float value)
-  {
-    if(value != currentBrightness)
-    {
-      currentBrightness = value;
-      FastLED.setBrightness(255 * value);
-    }
-  }
-
-  void enable()
-  {
-    if(not enabled)
-    {
-      enabled = true;
-      enableLedsWithDelay();
-    }
-  }
-  void disable()
-  {
-    if(enabled)
-    {
-      enabled = false;
-      disableLedsWithDelay();
-    }
-  }
-  
-private:
-  static const int numOfLeds = 120;
-  CRGB ledsTable[numOfLeds];
-  bool enabled;
-  size_t currentColorIdx;
-  CRGB currentColor;
-  float currentBrightness;
-  int enabldeAndDisableDelay;
-  static std::vector<CRGB> Colors;
 
   void nextColor()
   {
@@ -84,31 +137,7 @@ private:
   {
     for( int i = 0; i < numOfLeds; i++)
     {
-        ledsTable[i] = currentColor;
-    }
-  }
-
-  void enableLedsWithDelay()
-  {
-    int middleOfLeds = numOfLeds / 2;
-    for( int i = 0, j = numOfLeds - 1; i < middleOfLeds; i++, j--)
-    {
-      ledsTable[i] = currentColor;
-      ledsTable[j] = currentColor;
-      delay(enabldeAndDisableDelay);
-      FastLED.show();
-    }
-  }
-
-  void disableLedsWithDelay()
-  {
-    int middleOfLeds = numOfLeds / 2;
-    for( int i = middleOfLeds - 1, j = middleOfLeds; 0 <= i; i--, j++)
-    {
-      ledsTable[i] = CRGB::Black;
-      ledsTable[j] = CRGB::Black;
-      delay(enabldeAndDisableDelay);
-      FastLED.show();
+        leds[i] = currentColor;
     }
   }
 };
@@ -123,3 +152,5 @@ std::vector<CRGB> Blade::Colors = {
   CRGB::Blue,
   CRGB::Purple
 };
+
+#endif // BLADE_H

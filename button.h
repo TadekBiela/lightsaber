@@ -1,3 +1,6 @@
+#ifndef BUTTON_H
+#define BUTTON_H
+
 class Button
 {
 public:
@@ -23,3 +26,5 @@ private:
   int buttonPin;
   bool isWasPressed;
 };
+
+#endif // BUTTON_H

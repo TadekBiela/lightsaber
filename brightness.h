@@ -1,3 +1,6 @@
+#ifndef BRIGHTNESS_H
+#define BRIGHTNESS_H
+
 class Brightness
 {
 public:
@@ -25,3 +28,5 @@ private:
   int analogMin;
   int analogMax;
 };
+
+#endif // BRIGHTNESS_H
