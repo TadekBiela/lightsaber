@@ -23,9 +23,6 @@ public:
   {
     if(activationButton.clicked())
     {
-      Serial.print("lightSaber.state() - ");
-      Serial.print(isActive);
-      Serial.print("\n");
       isActive = !isActive;
     }
 
