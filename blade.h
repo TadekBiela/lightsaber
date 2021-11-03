@@ -4,10 +4,12 @@
 #include "brightness.h"
 #include "button.h"
 #include "pinsconfig.h"
+#include <EEPROM.h>
 #include <FastLED.h>
 #include <vector>
 
 FASTLED_USING_NAMESPACE
+int eepromCurrentColorIdxAddr = 0;
 
 class Blade
 {
@@ -15,8 +17,6 @@ public:
   Blade() :
     activated(false),
     colorChangeButton(CHANGE_COLOR_PIN),
-    currentColorIdx(0),
-    currentColor(Blade::Colors[currentColorIdx]),
     brightnessInput(
       BRIGHTNESS_PIN,
       6,
@@ -24,14 +24,13 @@ public:
     ),
     currentBrightness(0),
     enabldeAndDisableDelay(3)
-  {    
-    setCurrentColor();
+  {
   }
 
   void init()
   {
-    FastLED.addLeds<WS2811, LED_STRIP_DATA_PIN, GRB>(ledsTable(), numberOfLeds()).setCorrection(TypicalLEDStrip);
-    FastLED.setBrightness(0);
+    loadCurrentColor();
+    initLedStrip();
   }
 
   void activate()
@@ -68,11 +67,16 @@ private:
   bool activated;
   Button colorChangeButton;
   size_t currentColorIdx;
-  CRGB currentColor;
   Brightness brightnessInput;
   float currentBrightness;
   int enabldeAndDisableDelay;
   static std::vector<CRGB> Colors;
+
+  void initLedStrip()
+  {
+    FastLED.addLeds<WS2811, LED_STRIP_DATA_PIN, GRB>(ledsTable(), numberOfLeds()).setCorrection(TypicalLEDStrip);
+    FastLED.setBrightness(0);
+  }
 
   int numberOfLeds() const
   {
@@ -86,6 +90,7 @@ private:
   void enableLedsWithDelay()
   {
     int middleOfLeds = numOfLeds / 2;
+    CRGB currentColor(Blade::Colors[currentColorIdx]);
     for( int i = 0, j = numOfLeds - 1; i < middleOfLeds; i++, j--)
     {
       leds[i] = currentColor;
@@ -121,6 +126,7 @@ private:
   {
     nextColor();
     setCurrentColor();
+    saveCurrentColor();
   }
 
   void nextColor()
@@ -130,15 +136,30 @@ private:
     {
       currentColorIdx = 0;
     }
-    currentColor = Blade::Colors[currentColorIdx];
   }
   
   void setCurrentColor()
   {
+    CRGB currentColor(Blade::Colors[currentColorIdx]);
     for( int i = 0; i < numOfLeds; i++)
     {
         leds[i] = currentColor;
     }
+  }
+
+  void saveCurrentColor()
+  {
+    EEPROM.begin(4);
+    delay(20);
+    EEPROM.put(eepromCurrentColorIdxAddr, currentColorIdx);
+    EEPROM.end();
+  }
+
+  void loadCurrentColor()
+  {
+    EEPROM.begin(4);
+    delay(20);
+    EEPROM.get(eepromCurrentColorIdxAddr, currentColorIdx);
   }
 };
 
