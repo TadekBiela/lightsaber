@@ -10,12 +10,12 @@ public:
   {}
   bool clicked()
   {
-    if(analogRead(buttonPin) && isWasPressed == false)
+    if(digitalRead(buttonPin) && isWasPressed == false)
     {
       isWasPressed = true;
       return true;
     }
-    else if(analogRead(buttonPin) == 0)
+    else if(digitalRead(buttonPin) == 0)
     {
       isWasPressed = false;
     }

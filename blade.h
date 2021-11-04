@@ -6,7 +6,7 @@
 #include "pinsconfig.h"
 #include <EEPROM.h>
 #include <FastLED.h>
-#include <vector>
+#include <ArxContainer.h>
 
 FASTLED_USING_NAMESPACE
 int eepromCurrentColorIdxAddr = 0;
@@ -25,6 +25,14 @@ public:
     currentBrightness(0),
     enabldeAndDisableDelay(3)
   {
+    colors.push_back(CRGB::Red);
+    colors.push_back(CRGB::Orange);
+    colors.push_back(CRGB::LawnGreen);
+    colors.push_back(CRGB::Green);
+    colors.push_back(CRGB::LightSeaGreen);
+    colors.push_back(CRGB::Cyan);
+    colors.push_back(CRGB::Blue);
+    colors.push_back(CRGB::Purple);
   }
 
   void init()
@@ -70,7 +78,7 @@ private:
   Brightness brightnessInput;
   float currentBrightness;
   int enabldeAndDisableDelay;
-  static std::vector<CRGB> Colors;
+  arx::vector<CRGB> colors;
 
   void initLedStrip()
   {
@@ -90,7 +98,7 @@ private:
   void enableLedsWithDelay()
   {
     int middleOfLeds = numOfLeds / 2;
-    CRGB currentColor(Blade::Colors[currentColorIdx]);
+    CRGB currentColor(colors[currentColorIdx]);
     for( int i = 0, j = numOfLeds - 1; i < middleOfLeds; i++, j--)
     {
       leds[i] = currentColor;
@@ -132,7 +140,7 @@ private:
   void nextColor()
   {
     currentColorIdx++;
-    if(Blade::Colors.size() <= currentColorIdx)
+    if(colors.size() <= currentColorIdx)
     {
       currentColorIdx = 0;
     }
@@ -140,7 +148,7 @@ private:
   
   void setCurrentColor()
   {
-    CRGB currentColor(Blade::Colors[currentColorIdx]);
+    CRGB currentColor(colors[currentColorIdx]);
     for( int i = 0; i < numOfLeds; i++)
     {
         leds[i] = currentColor;
@@ -149,29 +157,13 @@ private:
 
   void saveCurrentColor()
   {
-    EEPROM.begin(4);
-    delay(20);
     EEPROM.put(eepromCurrentColorIdxAddr, currentColorIdx);
-    EEPROM.end();
   }
 
   void loadCurrentColor()
   {
-    EEPROM.begin(4);
-    delay(20);
     EEPROM.get(eepromCurrentColorIdxAddr, currentColorIdx);
   }
-};
-
-std::vector<CRGB> Blade::Colors = {
-  CRGB::Red,
-  CRGB::Orange,
-  CRGB::LawnGreen,
-  CRGB::Green,
-  CRGB::LightSeaGreen,
-  CRGB::Cyan,
-  CRGB::Blue,
-  CRGB::Purple
 };
 
 #endif // BLADE_H
