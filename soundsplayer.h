@@ -73,19 +73,19 @@ private:
   const int trackDurationInMs[SoundsPlayer::NUM_OF_TRACKS] =
   {
     0,    //NO_TRACK
-    1500, //ON
+    1400, //ON
     660,  //OFF
     530,  //SWING1
     660,  //SWING2
-    1000, //SWING3
+    900,  //SWING3
     560,  //SWING4
     610,  //SWING5
-    1260, //SWING6
+    900,  //SWING6
     560,  //SWING7
     710,  //SWING8
     560,  //STRIKE1
     610,  //STRIKE2
-    2050  //STRIKE3
+    850   //STRIKE3
   };
 
   enum COMMANDS
