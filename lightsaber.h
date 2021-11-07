@@ -4,6 +4,7 @@
 #include "blade.h"
 #include "button.h"
 #include "pinsconfig.h"
+#include "soundsplayer.h"
 
 class LightSaber
 {
@@ -11,11 +12,12 @@ public:
   LightSaber() :
     isActive(false),
     activationButton(ACTIVATION_BUTTON_PIN),
-    blade()
+    blade(&soundsPlayer)
   {}
 
   void init()
   {
+    soundsPlayer.init();
     blade.init();
   }
 
@@ -43,6 +45,7 @@ public:
 private:
   bool isActive;
   Button activationButton;
+  SoundsPlayer soundsPlayer;
   Blade blade;
 
   void activateExecutionLoop()

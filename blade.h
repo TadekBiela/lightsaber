@@ -4,6 +4,7 @@
 #include "brightness.h"
 #include "button.h"
 #include "pinsconfig.h"
+#include "soundsplayer.h"
 #include <EEPROM.h>
 #include <FastLED.h>
 #include <ArxContainer.h>
@@ -14,7 +15,7 @@ int eepromCurrentColorIdxAddr = 0;
 class Blade
 {
 public:
-  Blade() :
+  Blade(SoundsPlayer* soundsPlayer) :
     activated(false),
     colorChangeButton(CHANGE_COLOR_PIN),
     brightnessInput(
@@ -23,7 +24,8 @@ public:
       1024
     ),
     currentBrightness(0),
-    enabldeAndDisableDelay(3)
+    enabldeAndDisableDelay(3),
+    soundsPlayerPtr(soundsPlayer)
   {
     colors.push_back(CRGB::Red);
     colors.push_back(CRGB::Orange);
@@ -47,7 +49,9 @@ public:
     {
       setBrightness();
       activated = true;
+      soundsPlayerPtr->playTrack(SoundsPlayer::ON);
       enableLedsWithDelay();
+      soundsPlayerPtr->loopTrack(SoundsPlayer::IDLE);
     }
   }
   void deactivate()
@@ -55,6 +59,7 @@ public:
     if(activated)
     {
       activated = false;
+      soundsPlayerPtr->playTrack(SoundsPlayer::OFF);
       disableLedsWithDelay();
     }
   }
@@ -78,6 +83,7 @@ private:
   Brightness brightnessInput;
   float currentBrightness;
   int enabldeAndDisableDelay;
+  SoundsPlayer* soundsPlayerPtr;
   arx::vector<CRGB> colors;
 
   void initLedStrip()

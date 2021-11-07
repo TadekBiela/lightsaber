@@ -5,10 +5,12 @@
 LightSaber lightSaber;
 
 void setup() {
+  Serial.begin(115200);
+
   setupConfiguratedPins();
   lightSaber.init();
-  delay(2000);
-  Serial.begin(9600);
+
+  Serial.println(F("Setup ready!"));
 }
 
 void loop()
