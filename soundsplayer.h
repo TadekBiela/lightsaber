@@ -46,6 +46,16 @@ public:
     lastPlayedTrack = track;
   }
 
+  void playRandomSwingTrack()
+  {
+    playRandomTrackFromRangeWithIdleAtEnd(SoundsPlayer::SWING1, SoundsPlayer::SWING8);
+  }
+
+  void playRandomStrikeTrack()
+  {
+    playRandomTrackFromRangeWithIdleAtEnd(SoundsPlayer::STRIKE1, SoundsPlayer::STRIKE3);
+  }
+
   void loopTrack(SoundsPlayer::TRACK track)
   {
     delay(trackDurationInMs[lastPlayedTrack]);
@@ -95,6 +105,13 @@ private:
     softwareSerial.write((byte)0x00);
     softwareSerial.write(argument);
     softwareSerial.write((byte)0xEF);
+  }
+
+  void playRandomTrackFromRangeWithIdleAtEnd(SoundsPlayer::TRACK begin, SoundsPlayer::TRACK end)
+  {
+    int randomSwingTrack = random(begin, end + 1);
+    playTrack(randomSwingTrack);
+    loopTrack(SoundsPlayer::IDLE);
   }
 };
 
