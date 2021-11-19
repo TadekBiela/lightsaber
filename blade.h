@@ -1,9 +1,9 @@
 #ifndef BALDE_H
 #define BALDE_H
 
-#include "brightness.h"
 #include "button.h"
 #include "pinsconfig.h"
+#include "potentiometer.h"
 #include "soundsplayer.h"
 #include <EEPROM.h>
 #include <FastLED.h>
@@ -18,7 +18,7 @@ public:
   Blade(SoundsPlayer* soundsPlayer) :
     activated(false),
     colorChangeButton(CHANGE_COLOR_PIN),
-    brightnessInput(
+    brightness(
       BRIGHTNESS_PIN,
       6,
       1024
@@ -80,7 +80,7 @@ private:
   bool activated;
   Button colorChangeButton;
   size_t currentColorIdx;
-  Brightness brightnessInput;
+  Potentiometer brightness;
   float currentBrightness;
   int enabldeAndDisableDelay;
   SoundsPlayer* soundsPlayerPtr;
@@ -128,7 +128,7 @@ private:
 
   void setBrightness()
   {
-    float newValue = brightnessInput.level();
+    float newValue = brightness.level();
     if(currentBrightness != newValue)
     {
       currentBrightness = newValue;
