@@ -37,7 +37,7 @@ public:
   {
     softwareSerial.begin(9600);
     delay(1000);
-    setVolume(1);
+    setVolume(25);
   }
 
   void playTrack(SoundsPlayer::TRACK track)

@@ -3,6 +3,7 @@
 
 #include "blade.h"
 #include "button.h"
+#include "movedetector.h"
 #include "pinsconfig.h"
 #include "soundsplayer.h"
 
@@ -12,13 +13,15 @@ public:
   LightSaber() :
     isActive(false),
     activationButton(ACTIVATION_BUTTON_PIN),
-    blade(&soundsPlayer)
+    blade(&soundsPlayer),
+    moveDetector(&soundsPlayer)
   {}
 
   void init()
   {
     soundsPlayer.init();
     blade.init();
+    moveDetector.init();
   }
 
   bool isActivated()
@@ -47,12 +50,14 @@ private:
   Button activationButton;
   SoundsPlayer soundsPlayer;
   Blade blade;
+  MoveDetector moveDetector;
 
   void activateExecutionLoop()
   {
     while(isActivated())
     {
       blade.checkChanges();
+      moveDetector.checkChanges();
       delay(50);
     }
     

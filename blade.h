@@ -70,6 +70,7 @@ public:
     if(colorChangeButton.clicked())
     {
       changeColor();
+      soundsPlayerPtr->playRandomSwingTrack();
     }
     FastLED.show();
   }
