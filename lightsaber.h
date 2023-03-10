@@ -2,7 +2,7 @@
 #define LIGHTSABER_H
 
 #include "blade.h"
-#include "button.h"
+#include "monobutton.h"
 #include "movedetector.h"
 #include "pinsconfig.h"
 #include "soundsplayer.h"
@@ -26,6 +26,8 @@ public:
 
   bool isActivated()
   {
+    activationButton.readInput();
+
     if(activationButton.clicked())
     {
       isActive = !isActive;
@@ -47,7 +49,7 @@ public:
   
 private:
   bool isActive;
-  Button activationButton;
+  MonoButton activationButton;
   SoundsPlayer soundsPlayer;
   Blade blade;
   MoveDetector moveDetector;

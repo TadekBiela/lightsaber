@@ -1,7 +1,7 @@
 #ifndef BALDE_H
 #define BALDE_H
 
-#include "button.h"
+#include "monobutton.h"
 #include "pinsconfig.h"
 #include "potentiometer.h"
 #include "soundsplayer.h"
@@ -79,7 +79,7 @@ private:
   static const int numOfLeds = 120;
   CRGB leds[numOfLeds];
   bool activated;
-  Button colorChangeButton;
+  MonoButton colorChangeButton;
   size_t currentColorIdx;
   Potentiometer brightness;
   float currentBrightness;
