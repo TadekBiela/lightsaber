@@ -4,6 +4,8 @@
 #include "pinsconfig.h"
 #include <SoftwareSerial.h>
 
+#define DFPLAYER_UART_FRAME_SIZE 0x08
+
 class SoundsPlayer
 {
 public:
@@ -31,6 +33,7 @@ public:
     softwareSerial(SOUNDS_PLAYER_RX_PIN, SOUNDS_PLAYER_TX_PIN),
     lastPlayedTrack(SoundsPlayer::NO_TRACK)
   {
+    memset(commandBuffer, 0x00, DFPLAYER_UART_FRAME_SIZE);
   }
 
   void init()
@@ -67,9 +70,15 @@ public:
     sendCommand(SET_VOLUME, volume);
   }
 
+  void stop()
+  {
+    sendCommand(STOP, 0);
+  }
+
 private:
   SoftwareSerial softwareSerial;
   TRACK lastPlayedTrack;
+  uint8_t commandBuffer[DFPLAYER_UART_FRAME_SIZE];
   const int trackDurationInMs[SoundsPlayer::NUM_OF_TRACKS] =
   {
     0,    //NO_TRACK
@@ -92,19 +101,22 @@ private:
   {
     PLAY_TRACK = 0x03,
     LOOP_TRACK = 0x08,
-    SET_VOLUME = 0x06
+    SET_VOLUME = 0x06,
+    STOP = 0x0E
   };
 
   void sendCommand(byte command, byte argument)
   {
-    softwareSerial.write((byte)0x7E);
-    softwareSerial.write((byte)0xFF);
-    softwareSerial.write((byte)0x06);
-    softwareSerial.write(command);
-    softwareSerial.write((byte)0x00);
-    softwareSerial.write((byte)0x00);
-    softwareSerial.write(argument);
-    softwareSerial.write((byte)0xEF);
+    commandBuffer[0] = (byte)0x7E;
+    commandBuffer[1] = (byte)0xFF;
+    commandBuffer[2] = (byte)0x06;
+    commandBuffer[3] = command;
+    commandBuffer[4] = (byte)0x00;
+    commandBuffer[5] = (byte)0x00;
+    commandBuffer[6] = argument;
+    commandBuffer[7] = (byte)0xEF;
+
+    softwareSerial.write(commandBuffer, DFPLAYER_UART_FRAME_SIZE);
   }
 
   void playRandomTrackFromRangeWithIdleAtEnd(SoundsPlayer::TRACK begin, SoundsPlayer::TRACK end)
