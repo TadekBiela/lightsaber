@@ -49,7 +49,9 @@ public:
       setBrightness();
       activated = true;
       soundsPlayerPtr->playTrack(SoundsPlayer::ON);
+      delay(550);
       enableLedsWithDelay();
+      delay(100);
       soundsPlayerPtr->loopTrack(SoundsPlayer::IDLE);
     }
   }
@@ -60,6 +62,8 @@ public:
       activated = false;
       soundsPlayerPtr->playTrack(SoundsPlayer::OFF);
       disableLedsWithDelay();
+      delay(300);
+      soundsPlayerPtr->stop();
     }
   }
 
@@ -101,6 +105,7 @@ private:
   {
     return leds;
   }
+
   void enableLedsWithDelay()
   {
     int middleOfLeds = numOfLeds / 2;
