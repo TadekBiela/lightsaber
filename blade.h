@@ -31,7 +31,6 @@ public:
     colors.push_back(CRGB::Orange);
     colors.push_back(CRGB::LawnGreen);
     colors.push_back(CRGB::Green);
-    colors.push_back(CRGB::LightSeaGreen);
     colors.push_back(CRGB::Cyan);
     colors.push_back(CRGB::Blue);
     colors.push_back(CRGB::Purple);
