@@ -62,7 +62,7 @@ public:
   void loopTrack(SoundsPlayer::TRACK track)
   {
     delay(trackDurationInMs[lastPlayedTrack]);
-    sendCommand(PLAY_TRACK, track);
+    sendCommand(LOOP_TRACK, track);
   }
 
   void setVolume(byte volume)
