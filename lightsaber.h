@@ -26,8 +26,6 @@ public:
 
   bool isActivated()
   {
-    activationButton.readInput();
-
     if(activationButton.clicked())
     {
       isActive = !isActive;

@@ -1,47 +1,25 @@
 #ifndef MONO_BUTTON_H
 #define MONO_BUTTON_H
 
+/*
+ * Remember to connect 1k ohm pull-down resistor
+ * between buttonPin and ground.
+ */
+
 class MonoButton
 {
 public:
   MonoButton(int inputPin) :
-    buttonPin(inputPin),
-    pressCounter(0),
-    clickedFlag(false)
+    buttonPin(inputPin)
   {}
-  
-  void readInput()
-  {
-    if(digitalRead(buttonPin) == 1)
-    {
-      pressCounter++;
-    }
-    else
-    {
-      if(clickedCounterLimit <= pressCounter)
-      {
-        clickedFlag = true;
-      }
-      else
-      {
-        clickedFlag = false;
-      }
-      
-      pressCounter = 0;
-    }
-  }
 
   bool clicked() const
   {
-    return clickedFlag;
+    return digitalRead(buttonPin) == 1 ? true : false ;
   }
 
 private:
   int buttonPin;
-  int pressCounter;
-  bool clickedFlag;
-  
-  const int clickedCounterLimit = 2;
 };
 
 #endif // MONO_BUTTON_H
