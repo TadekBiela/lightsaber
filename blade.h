@@ -7,7 +7,7 @@
 #include "soundsplayer.h"
 #include <EEPROM.h>
 #include <FastLED.h>
-#include <ArxContainer.h>
+#include <ArduinoSTL.h>
 
 FASTLED_USING_NAMESPACE
 int eepromCurrentColorIdxAddr = 0;
@@ -87,7 +87,7 @@ private:
   float currentBrightness;
   int enabldeAndDisableDelay;
   SoundsPlayer* soundsPlayerPtr;
-  arx::vector<CRGB> colors;
+  std::vector<CRGB> colors;
 
   void initLedStrip()
   {
