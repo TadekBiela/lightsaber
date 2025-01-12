@@ -18,12 +18,6 @@ public:
   Blade(SoundsPlayer* soundsPlayer) :
     activated(false),
     colorChangeButton(CHANGE_COLOR_PIN),
-    brightness(
-      BRIGHTNESS_PIN,
-      6,
-      1024
-    ),
-    currentBrightness(0),
     enabldeAndDisableDelay(3),
     soundsPlayerPtr(soundsPlayer)
   {
@@ -46,7 +40,6 @@ public:
   {
     if(not activated)
     {
-      setBrightness();
       activated = true;
       soundsPlayerPtr->playTrack(SoundsPlayer::ON);
       delay(550);
@@ -61,14 +54,13 @@ public:
       activated = false;
       soundsPlayerPtr->playTrack(SoundsPlayer::OFF);
       disableLedsWithDelay();
-      delay(300);
+      delay(700);
       soundsPlayerPtr->stop();
     }
   }
 
   void checkChanges()
   {
-    setBrightness();
     if(colorChangeButton.clicked())
     {
       changeColor();
@@ -83,8 +75,6 @@ private:
   bool activated;
   MonoButton colorChangeButton;
   size_t currentColorIdx;
-  Potentiometer brightness;
-  float currentBrightness;
   int enabldeAndDisableDelay;
   SoundsPlayer* soundsPlayerPtr;
   std::vector<CRGB> colors;
@@ -92,7 +82,7 @@ private:
   void initLedStrip()
   {
     FastLED.addLeds<WS2811, LED_STRIP_DATA_PIN, GRB>(ledsTable(), numberOfLeds()).setCorrection(TypicalLEDStrip);
-    FastLED.setBrightness(0);
+    FastLED.setBrightness(255);
   }
 
   int numberOfLeds() const
@@ -127,16 +117,6 @@ private:
       leds[j] = CRGB::Black;
       delay(enabldeAndDisableDelay);
       FastLED.show();
-    }
-  }
-
-  void setBrightness()
-  {
-    float newValue = brightness.level();
-    if(currentBrightness != newValue)
-    {
-      currentBrightness = newValue;
-      FastLED.setBrightness(255 * newValue);
     }
   }
 
