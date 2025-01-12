@@ -52,7 +52,6 @@ public:
       delay(550);
       enableLedsWithDelay();
       delay(100);
-      soundsPlayerPtr->loopTrack(SoundsPlayer::IDLE);
     }
   }
   void deactivate()

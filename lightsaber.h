@@ -58,7 +58,8 @@ private:
     {
       blade.checkChanges();
       moveDetector.checkChanges();
-      delay(50);
+      soundsPlayer.checkIfIdleLoopShouldBeStarted();
+      delay(100);
     }
     
     deactivate();

@@ -30,8 +30,7 @@ public:
   };
 
   SoundsPlayer() :
-    softwareSerial(SOUNDS_PLAYER_RX_PIN, SOUNDS_PLAYER_TX_PIN),
-    lastPlayedTrack(SoundsPlayer::NO_TRACK)
+    softwareSerial(SOUNDS_PLAYER_RX_PIN, SOUNDS_PLAYER_TX_PIN)
   {
     memset(commandBuffer, 0x00, DFPLAYER_UART_FRAME_SIZE);
   }
@@ -40,17 +39,23 @@ public:
   {
     softwareSerial.begin(9600);
     delay(1000);
-    setVolume(25);
+    setVolume(14);
   }
 
   void playTrack(SoundsPlayer::TRACK track)
   {
-    sendCommand(PLAY_TRACK, track);
-    lastPlayedTrack = track;
+    if(canPlayNextTrack)
+    {
+      sendCommand(PLAY_TRACK, track);
+      loopIdlePlayDelayCounter = 0;
+      isLoopIdlePlay = false;
+      canPlayNextTrack = false;
+    }
   }
 
   void playRandomSwingTrack()
   {
+    Serial.println("SWING1");
     playRandomTrackFromRangeWithIdleAtEnd(SoundsPlayer::SWING1, SoundsPlayer::SWING8);
   }
 
@@ -61,8 +66,10 @@ public:
 
   void loopTrack(SoundsPlayer::TRACK track)
   {
-    delay(trackDurationInMs[lastPlayedTrack]);
     sendCommand(LOOP_TRACK, track);
+    loopIdlePlayDelayCounter = 0;
+    isLoopIdlePlay = true;
+    canPlayNextTrack = true;
   }
 
   void setVolume(byte volume)
@@ -73,29 +80,38 @@ public:
   void stop()
   {
     sendCommand(STOP, 0);
+    loopIdlePlayDelayCounter = 0;
+  }
+
+  void checkIfIdleLoopShouldBeStarted()
+  {
+    if(isLoopIdlePlay)
+    {
+      return;
+    }
+
+    if(startPlayNextTrackLimit <= loopIdlePlayDelayCounter)
+    {
+      canPlayNextTrack = true;
+    }
+    if(loopIdlePlayStartLimit <= loopIdlePlayDelayCounter)
+    {
+      loopTrack(SoundsPlayer::IDLE);
+    }
+    else
+    {
+      loopIdlePlayDelayCounter++;
+    }
   }
 
 private:
   SoftwareSerial softwareSerial;
-  TRACK lastPlayedTrack;
   uint8_t commandBuffer[DFPLAYER_UART_FRAME_SIZE];
-  const int trackDurationInMs[SoundsPlayer::NUM_OF_TRACKS] =
-  {
-    0,    //NO_TRACK
-    1400, //ON
-    660,  //OFF
-    530,  //SWING1
-    660,  //SWING2
-    900,  //SWING3
-    560,  //SWING4
-    610,  //SWING5
-    900,  //SWING6
-    560,  //SWING7
-    710,  //SWING8
-    560,  //STRIKE1
-    610,  //STRIKE2
-    850   //STRIKE3
-  };
+  bool isLoopIdlePlay { false };
+  int loopIdlePlayDelayCounter { 0 };
+  const int loopIdlePlayStartLimit { 6000 };
+  bool canPlayNextTrack { true };
+  const int startPlayNextTrackLimit { 10 };
 
   enum COMMANDS
   {
@@ -123,7 +139,6 @@ private:
   {
     int randomSwingTrack = random(begin, end + 1);
     playTrack(randomSwingTrack);
-    loopTrack(SoundsPlayer::IDLE);
   }
 };
 
