@@ -6,6 +6,7 @@ LightSaber lightSaber;
 
 void setup() {
   Serial.begin(115200);
+  Serial.println(F("Setup started"));
 
   setupConfiguratedPins();
   lightSaber.init();
