@@ -10,7 +10,10 @@ public:
     soundsPlayerPtr(soundsPlayer),
     AxisX(0),
     AxisY(0),
-    AxisZ(0)
+    AxisZ(0),
+    prevAxisX(0),
+    prevAxisY(0),
+    prevAxisZ(0)
   {
   }
 
@@ -31,12 +34,15 @@ public:
 
 private:
   const int MPU = 0x68;
-  const int strikeThreshold = 29000;
-  const int swingThreshold = 20000;
+  const int strikeThreshold = 18000;
+  const int swingThreshold = 8000;
   SoundsPlayer* soundsPlayerPtr;
   int16_t AxisX;
   int16_t AxisY;
   int16_t AxisZ;
+  int16_t prevAxisX;
+  int16_t prevAxisY;
+  int16_t prevAxisZ;
 
   void readCurrentAxisValues()
   {
@@ -48,10 +54,6 @@ private:
     AxisX = Wire.read()<<8|Wire.read();
     AxisY = Wire.read()<<8|Wire.read();
     AxisZ = Wire.read()<<8|Wire.read();
-    Serial.print("X: " );Serial.println(AxisX);
-    Serial.print("Y: " );Serial.println(AxisY);
-    Serial.print("Z: " );Serial.println(AxisZ);
-    Serial.println("---------------------------------");
   }
 
   void playMoveSoundIfRequired()
@@ -64,20 +66,27 @@ private:
     {
       soundsPlayerPtr->playRandomSwingTrack();
     }
+    prevAxisX = AxisX;
+    prevAxisY = AxisY;
+    prevAxisZ = AxisZ;
   }
 
   bool isStrikeMove() const
   {
-    return ( strikeThreshold < abs(AxisX) ||
-             strikeThreshold < abs(AxisY) ||
-             strikeThreshold < abs(AxisZ) );
+    return ( strikeThreshold < abs(prevAxisX - AxisX) ||
+             strikeThreshold < abs(prevAxisY - AxisY) ||
+             strikeThreshold < abs(prevAxisZ - AxisZ) );
   }
 
   bool isSwingMove() const
   {
-    return ( swingThreshold < abs(AxisX) ||
-             swingThreshold < abs(AxisY) ||
-             swingThreshold < abs(AxisZ) );
+    Serial.print("X: " );Serial.println(abs(prevAxisX - AxisX));
+    Serial.print("Y: " );Serial.println(abs(prevAxisY - AxisY));
+    Serial.print("Z: " );Serial.println(abs(prevAxisZ - AxisZ));
+    Serial.println("---------------------------------");
+    return ( swingThreshold < abs(prevAxisX - AxisX) ||
+             swingThreshold < abs(prevAxisY - AxisY) ||
+             swingThreshold < abs(prevAxisZ - AxisZ) );
   }
 };
 
