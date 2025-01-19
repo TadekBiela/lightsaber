@@ -51,7 +51,10 @@ public:
       sendCommand(PLAY_TRACK, track);
       loopIdlePlayDelayCounter = 0;
       isLoopIdlePlay = false;
-      canPlayNextTrack = false;
+      if(track != SoundsPlayer::OFF)
+      {
+        canPlayNextTrack = false;
+      }
     }
   }
 
@@ -113,7 +116,7 @@ private:
   int loopIdlePlayDelayCounter { 0 };
   const int loopIdlePlayStartLimit { 6000 };
   bool canPlayNextTrack { true };
-  const int startPlayNextTrackLimit { 10 };
+  const int startPlayNextTrackLimit { 5 };
 
   enum COMMANDS
   {
