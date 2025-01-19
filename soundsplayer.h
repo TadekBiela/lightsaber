@@ -12,7 +12,9 @@ public:
   enum TRACK
   {
     NO_TRACK = 0,
-    ON = 1,
+    ON1,
+    ON2,
+    ON3,
     OFF,
     SWING1,
     SWING2,
