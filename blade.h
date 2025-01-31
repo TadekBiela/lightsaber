@@ -51,19 +51,19 @@ public:
       {
         soundsPlayerPtr->playTrack(SoundsPlayer::ON2);
         delay(400);
-        fastEnableLedsWithDelay();
+        enableLedsWithDelay(0, 10);
       }
       else if(onSpeedLevel == 1)
       {
         soundsPlayerPtr->playTrack(SoundsPlayer::ON1);
         delay(400);
-        enableLedsWithDelay(3);
+        enableLedsWithDelay(1, 3);
       }
       else if(onSpeedLevel == 2)
       {
         soundsPlayerPtr->playTrack(SoundsPlayer::ON3);
         delay(400);
-        enableLedsWithDelay(8);
+        enableLedsWithDelay(3, 3);
       }
       delay(100);
     }
@@ -91,7 +91,7 @@ public:
   }
   
 private:
-  static const int numOfLeds = 120;
+  static const int numOfLeds = 260;
   CRGB leds[numOfLeds];
   bool activated;
   MonoButton colorChangeButton;
@@ -116,33 +116,18 @@ private:
     return leds;
   }
 
-  void fastEnableLedsWithDelay()
+  void enableLedsWithDelay(int enableDelay, int numOfLedsOnSameTime)
   {
-    int middleOfLeds = numOfLeds / 2;
+    int middleOfLeds{ numOfLeds / 2 };
     CRGB currentColor(colors[currentColorIdx]);
-    for( int i = 0, j = numOfLeds - 1; i < middleOfLeds; i+=4, j-=4)
+    for(int i = 0, j = numOfLeds - 1; i < middleOfLeds; i+=numOfLedsOnSameTime, j-=numOfLedsOnSameTime)
     {
-      leds[i] = currentColor;
-      leds[i+1] = currentColor;
-      leds[i+2] = currentColor;
-      leds[i+3] = currentColor;
-      leds[j] = currentColor;
-      leds[j-1] = currentColor;
-      leds[j-2] = currentColor;
-      leds[j-3] = currentColor;
-      FastLED.show();
-    }
-  }
-
-  void enableLedsWithDelay(int enableDelay)
-  {
-    int middleOfLeds = numOfLeds / 2;
-    CRGB currentColor(colors[currentColorIdx]);
-    for( int i = 0, j = numOfLeds - 1; i < middleOfLeds; i++, j--)
-    {
-      leds[i] = currentColor;
-      leds[j] = currentColor;
-      delay(enableDelay);
+      for(int k = 0; k < numOfLedsOnSameTime; k++)
+      {
+        leds[i+k] = currentColor;
+        leds[j-k] = currentColor;
+        delay(enableDelay);
+      }
       FastLED.show();
     }
   }
@@ -150,11 +135,13 @@ private:
   void disableLedsWithDelay()
   {
     int middleOfLeds = numOfLeds / 2;
-    for( int i = middleOfLeds - 1, j = middleOfLeds; 0 <= i; i--, j++)
+    for( int i = middleOfLeds - 1, j = middleOfLeds; 0 <= i; i-=2, j+=2)
     {
       leds[i] = CRGB::Black;
+      leds[i-1] = CRGB::Black;
       leds[j] = CRGB::Black;
-      delay(3);
+      leds[j+1] = CRGB::Black;
+      delay(1);
       FastLED.show();
     }
   }
