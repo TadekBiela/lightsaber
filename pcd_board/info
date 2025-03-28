@@ -1,0 +1,432 @@
+{
+  "uuid": "e759ad7ab986ddedf61cb18565893c05",
+  "path": "Offline/Lightsaber",
+  "name": "Lightsaber",
+  "content": "",
+  "created_at": "2024-11-18 21:28:33",
+  "updated_at": "2024-12-27 11:07:39",
+  "stick": "",
+  "documents": [
+    {
+      "uuid": "8837efbfa941813f53c25fdacbd7c750",
+      "title": "Sheet_1",
+      "description": "",
+      "docType": "1",
+      "master": "",
+      "thumb": "/images/thumb-default.png",
+      "components": {
+        "b7adf400643b4936be8b786704d0e70f": 1,
+        "da9fa36345cb476e9dbb6b3e84ba4d97": 1,
+        "d06ce80a9c114a66b5df169e0292de36": 1,
+        "8b65296ca757469d9f11081d30cfba9d": 1,
+        "8144911b61d94703bcfe863ef33d6e78": 4,
+        "36058b480be24802a9bb6ecfdac9a2e8": 2,
+        "baadc389990d49a8816a7bc3352fdf5a": 1
+      },
+      "BOM": [
+        [
+          "Value",
+          "Quantity",
+          "Package",
+          "Components",
+          "CustomPara"
+        ],
+        [
+          "DFPLayer Mini Player",
+          1,
+          "DFPLAYER-MINI-MODULE",
+          "1",
+          {
+            "Manufacturer Part": "",
+            "Manufacturer": "DFP",
+            "Supplier": "DFPlayer",
+            "Supplier Part": "DFPlayer"
+          }
+        ],
+        [
+          "Battery",
+          1,
+          "SPEAKER",
+          "BAT",
+          {
+            "Manufacturer Part": "",
+            "Manufacturer": "",
+            "Supplier": "",
+            "Supplier Part": ""
+          }
+        ],
+        [
+          "220uF",
+          1,
+          "CAPACITOR 220UF @ 16V",
+          "C2",
+          {
+            "Manufacturer Part": "",
+            "Manufacturer": "",
+            "Supplier": "",
+            "Supplier Part": ""
+          }
+        ],
+        [
+          "10 pins",
+          1,
+          "10PINS",
+          "P1",
+          {
+            "Manufacturer Part": "New SchematicLib",
+            "Manufacturer": "",
+            "Supplier": "",
+            "Supplier Part": ""
+          }
+        ],
+        [
+          "1K",
+          4,
+          "REZISTOR-0.125_WT_K",
+          "R1,R2,R3,R4",
+          {
+            "Manufacturer Part": "0.125Wt_k",
+            "Manufacturer": "",
+            "Supplier": "",
+            "Supplier Part": "undefined"
+          }
+        ],
+        [
+          "ARDUINO_NANO",
+          1,
+          "COMM-TH_ARDUINO_NANO",
+          "U1",
+          {
+            "Manufacturer Part": "ARDUINO_NANO",
+            "Manufacturer": "null",
+            "Supplier": "LCSC",
+            "Supplier Part": "C9900017879"
+          }
+        ],
+        [
+          "MPU-6050",
+          1,
+          "MPU-6050",
+          "U2",
+          {
+            "Manufacturer Part": "",
+            "Manufacturer": "",
+            "Supplier": "",
+            "Supplier Part": "undefined"
+          }
+        ],
+        [
+          "speaker",
+          1,
+          "SPEAKER",
+          "U4",
+          {
+            "Manufacturer Part": "",
+            "Manufacturer": "",
+            "Supplier": "",
+            "Supplier Part": ""
+          }
+        ]
+      ],
+      "updateTime": 1732661739,
+      "createTime": 1731961713,
+      "histories": [],
+      "created_at": "2024-11-18 21:28:33",
+      "updated_at": "2024-11-26 23:55:39"
+    },
+    {
+      "uuid": "70c3ba0e0db1b4c1d46b2de886577c66",
+      "puuid": "e759ad7ab986ddedf61cb18565893c05",
+      "title": "PCB_Lightsaber_2",
+      "filename": "PCB_Lightsaber_2.json",
+      "description": "",
+      "docType": "3",
+      "master": "",
+      "thumb": "/images/thumb-default.png",
+      "components": {
+        "4363f71e875d4e549db4c6d6569a6c16": 1,
+        "ff6e2030776d4574a7594ce501bb86c5": 1,
+        "a2ca64436005468caac9d8b7e0736272": 1,
+        "1bb8bfe7999542eda8c68d5c98012a4e": 4,
+        "051f8ac49bbd4bb2ad9459ec1dea45a1": 1
+      },
+      "BOM": [
+        [
+          "Value",
+          "Quantity",
+          "Package",
+          "Components",
+          "CustomPara"
+        ],
+        [
+          "DFPLayer Mini Player",
+          1,
+          "DFPLAYER-MINI-MODULE",
+          "1",
+          {
+            "Manufacturer Part": "",
+            "Manufacturer": "DFP",
+            "Supplier": "DFPlayer",
+            "Supplier Part": "DFPlayer"
+          }
+        ],
+        [
+          "Button_On_Off",
+          1,
+          "HDR-F-2.54_1X2",
+          "B1",
+          {
+            "Manufacturer Part": "",
+            "Manufacturer": "",
+            "Supplier": "LCSC",
+            "Supplier Part": "C49661"
+          }
+        ],
+        [
+          "Button_Change_Color",
+          1,
+          "HDR-F-2.54_1X2",
+          "B2",
+          {
+            "Manufacturer Part": "",
+            "Manufacturer": "",
+            "Supplier": "LCSC",
+            "Supplier Part": "C49661"
+          }
+        ],
+        [
+          "47uF",
+          1,
+          "CAPACITOR 25V 47UF",
+          "C1",
+          {
+            "Manufacturer Part": "电解电容25V 47uF",
+            "Manufacturer": "ValuePro",
+            "Supplier": "LCSC",
+            "Supplier Part": "C45704"
+          }
+        ],
+        [
+          "220uF",
+          1,
+          "CAPACITOR 220UF @ 16V",
+          "C2",
+          {
+            "Manufacturer Part": "",
+            "Manufacturer": "",
+            "Supplier": "",
+            "Supplier Part": ""
+          }
+        ],
+        [
+          "Led strip ports",
+          1,
+          "POTENTIOMETER PORTS V2",
+          "LED",
+          {
+            "Manufacturer Part": "",
+            "Manufacturer": "",
+            "Supplier": "",
+            "Supplier Part": ""
+          }
+        ],
+        [
+          "Potentiometer",
+          1,
+          "POTENTIOMETER PORTS V2",
+          "U5",
+          {
+            "Manufacturer Part": "",
+            "Manufacturer": "",
+            "Supplier": "",
+            "Supplier Part": ""
+          }
+        ],
+        [
+          "1K",
+          3,
+          "REZISTOR-0.125_WT_K",
+          "R1,R2,R3",
+          {
+            "Manufacturer Part": "0.125Wt_k",
+            "Manufacturer": "",
+            "Supplier": "",
+            "Supplier Part": "undefined"
+          }
+        ],
+        [
+          "ARDUINO_NANO",
+          1,
+          "COMM-TH_ARDUINO_NANO",
+          "U1",
+          {
+            "Manufacturer Part": "ARDUINO_NANO",
+            "Manufacturer": "null",
+            "Supplier": "LCSC",
+            "Supplier Part": "C9900017879"
+          }
+        ],
+        [
+          "MPU-6050",
+          1,
+          "MPU-6050",
+          "U2",
+          {
+            "Manufacturer Part": "",
+            "Manufacturer": "",
+            "Supplier": "",
+            "Supplier Part": "undefined"
+          }
+        ],
+        [
+          "speaker",
+          1,
+          "SPEAKER",
+          "U4",
+          {
+            "Manufacturer Part": "",
+            "Manufacturer": "",
+            "Supplier": "",
+            "Supplier Part": ""
+          }
+        ]
+      ],
+      "updateTime": 1735294059,
+      "createTime": 1732015887,
+      "histories": [],
+      "created_at": "2024-11-19 12:31:27",
+      "updated_at": "2024-12-27 11:07:39"
+    },
+    {
+      "uuid": "ec4f3761bba7d111842f49f82e02a07b",
+      "puuid": "e759ad7ab986ddedf61cb18565893c05",
+      "title": "PCB_Lightsaber_do_druku",
+      "filename": "PCB_Lightsaber_do_druku.json",
+      "description": "",
+      "docType": "3",
+      "master": "",
+      "thumb": "/images/thumb-default.png",
+      "components": {
+        "4363f71e875d4e549db4c6d6569a6c16": 3,
+        "ff6e2030776d4574a7594ce501bb86c5": 3,
+        "a2ca64436005468caac9d8b7e0736272": 3,
+        "1bb8bfe7999542eda8c68d5c98012a4e": 12
+      },
+      "BOM": [
+        [
+          "Value",
+          "Quantity",
+          "Package",
+          "Components",
+          "CustomPara"
+        ],
+        [
+          "DFPLayer Mini Player",
+          1,
+          "DFPLAYER-MINI-MODULE",
+          "1",
+          {
+            "Manufacturer Part": "",
+            "Manufacturer": "DFP",
+            "Supplier": "DFPlayer",
+            "Supplier Part": "DFPlayer"
+          }
+        ],
+        [
+          "ARDUINO_NANO",
+          1,
+          "COMM-TH_ARDUINO_NANO",
+          "U1",
+          {
+            "Manufacturer Part": "ARDUINO_NANO",
+            "Manufacturer": "null",
+            "Supplier": "LCSC",
+            "Supplier Part": "C9900017879"
+          }
+        ],
+        [
+          "MPU-6050",
+          1,
+          "MPU-6050",
+          "U2",
+          {
+            "Manufacturer Part": "",
+            "Manufacturer": "",
+            "Supplier": "",
+            "Supplier Part": "undefined"
+          }
+        ],
+        [
+          "Battery",
+          1,
+          "SPEAKER",
+          "BAT",
+          {
+            "Manufacturer Part": "",
+            "Manufacturer": "",
+            "Supplier": "",
+            "Supplier Part": ""
+          }
+        ],
+        [
+          "speaker",
+          1,
+          "SPEAKER",
+          "U4",
+          {
+            "Manufacturer Part": "",
+            "Manufacturer": "",
+            "Supplier": "",
+            "Supplier Part": ""
+          }
+        ],
+        [
+          "1K",
+          4,
+          "REZISTOR-0.125_WT_K",
+          "R4,R1,R2,R3",
+          {
+            "Manufacturer Part": "0.125Wt_k",
+            "Manufacturer": "",
+            "Supplier": "",
+            "Supplier Part": "undefined"
+          }
+        ],
+        [
+          "220uF",
+          1,
+          "CAPACITOR 220UF @ 16V",
+          "C2",
+          {
+            "Manufacturer Part": "",
+            "Manufacturer": "",
+            "Supplier": "",
+            "Supplier Part": ""
+          }
+        ],
+        [
+          "10 pins",
+          1,
+          "10PINS",
+          "P1",
+          {
+            "Manufacturer Part": "New SchematicLib",
+            "Manufacturer": "",
+            "Supplier": "",
+            "Supplier Part": ""
+          }
+        ]
+      ],
+      "updateTime": 1735290728,
+      "createTime": 1735290085,
+      "histories": [],
+      "created_at": "2024-12-27 10:01:25",
+      "updated_at": "2024-12-27 10:12:08"
+    }
+  ],
+  "sort": [],
+  "title": "Lightsaber",
+  "foldername": "Lightsaber",
+  "schfilename": "Lightsaber.json",
+  "schfilemtime": 1732661739093
+}
