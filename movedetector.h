@@ -2,6 +2,7 @@
 #define MOVEDETECTOR_H
 
 #include<Wire.h>
+#include<MPU6050_light.h>
 
 class MoveDetector
 {
@@ -20,10 +21,9 @@ public:
   void init()
   {
     Wire.begin();
-    Wire.beginTransmission(MPU);
-    Wire.write(0x6B); 
-    Wire.write(0);    
-    Wire.endTransmission(true);
+    mpu.begin();
+    delay(1000);
+    mpu.calcGyroOffsets();
   }
 
   void checkChanges()
@@ -33,9 +33,9 @@ public:
   }
 
 private:
-  const int MPU = 0x68;
-  const int strikeThreshold = 18000;
-  const int swingThreshold = 8000;
+  const int strikeThreshold = 230;
+  const int swingThreshold = 100;
+  MPU6050 mpu(Wire);
   SoundsPlayer* soundsPlayerPtr;
   int16_t AxisX;
   int16_t AxisY;
@@ -46,14 +46,11 @@ private:
 
   void readCurrentAxisValues()
   {
-    Wire.beginTransmission(MPU);
-    Wire.write(0x3B);
-    Wire.endTransmission(false);
-    Wire.requestFrom(MPU, 12, true);
+    mpu.update();
 
-    AxisX = Wire.read()<<8|Wire.read();
-    AxisY = Wire.read()<<8|Wire.read();
-    AxisZ = Wire.read()<<8|Wire.read();
+    AxisX = mpu.getAccX();
+    AxisY = mpu.getAccY();
+    AxisZ = mpu.getAccZ();
   }
 
   void playMoveSoundIfRequired()
